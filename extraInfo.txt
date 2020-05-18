@@ -1,0 +1,48 @@
+Welcome to this txt containing some extra info about particles, it's great to have you here.
+
+Unfortunately, some particles take some extra information than others, which can make command based applications a bit challenging.
+On a code level it's not a huge deal, but when we're talking about a user-called command, it can be annoying to have to suddenly
+add new arguments because of changing particle requirements. The spawnParticle() method has a special argument (T - data) where
+you plug in aforementioned special details (sometimes...). Anyways, here's a list of the particles that fancy themselves special:
+
+"REDSTONE": takes a DustOptions instance into T argument. Nice and easy.
+
+    Example:
+
+    DustOptions dustOptions = new DustOptions(Color.fromRGB(0, 127, 255), 1);
+    player.spawnParticle(Particle.REDSTONE, player.getLocation(), 1, dustOptions);
+
+
+"SPELL_MOB","SPELL_MOB_AMBIENT": These guys decided to be different, and decided to use the offset/delta arguments for RGB when
+    the "count" argument is set to 0 and "extra" argument set to 1. sigh. takes RGB values between 0 and 1. If "extra" is set to
+    anything other than 1, the color will be random. If set to 0, they'll be black.
+
+    Example:
+
+    double red = 0 / 255D;
+    double green = 127 / 255D;
+    double blue = 255 / 255D;
+    player.spawnParticle(Particle.SPELL_MOB, player.getLocation(), 0, red, green, blue, 1);
+
+
+"NOTE": Like the last type, NOTE also abruptly hijacks other arguments with little regard for common decency. Only difference here
+    is that NOTE has 24 possible colors. Same deal with the "count" and "extra" arguments as with SPELL. your offset/delta arguments should look like this:
+    "0 0 noteColor" with noteColor being a value between 0 and 1.
+
+    Example:
+
+    double note = 6 / 24D;
+    player.spawnParticle(Particle.NOTE, player.getLocation(), 0, note, 0, 0, 1);
+
+
+"ITEM_CRACK","BLOCK_CRACK","BLOCK_DUST","FALLING_DUST": Takes an ItemStack instance into T argument. Worth noting that most of them take a
+    material that passes the .IsBlock() test. ITEM_CRACK will take both blocks and items, however.
+
+    Example:
+
+    ItemStack itemCrackData = new ItemStack(Material.STONE);
+    player.spawnParticle(Particle.ITEM_CRACK, player.getLocation(), 10, itemCrackData);
+
+
+API usage information and examples "borrowed" from:
+https://www.spigotmc.org/threads/comprehensive-particle-spawning-guide-1-13.343001/

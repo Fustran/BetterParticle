@@ -1,0 +1,9 @@
+name: BetterParticle
+description: a command that gives you more control over spawning particles than default mc.
+author: Josh Fangrad
+version: 1.0
+main: net.cobaltium.betterparticle.BetterParticle
+
+commands:
+  BP:
+    description: the better particle command. expand me later.
