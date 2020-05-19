@@ -1,26 +1,74 @@
 package net.cobaltium.betterparticle.commands.bp;
+import net.cobaltium.betterparticle.data.NoteColors;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import net.cobaltium.betterparticle.util.Util;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class BPComplete implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        String[] res;
-        switch (args.length) {
+        String[] res = {};
+        int extraVarsState = 0;
+        int length = args.length;
+        if (length == 1) {
+            return Arrays.asList(Util.GetEnumNames(Particle.class));
+        } else {
+            //here we go through edge case particles that need extra arguments and push the normal args forward to accommodate
+            switch (args[0]) {
+                case "REDSTONE":
+                    extraVarsState = 1;
+                    length -= 4;
+                    break;
+                case "SPEL_MOB":
+                case "SPELL_MOB_AMBIENT":
+                    extraVarsState = 2;
+                    length -= 4;
+                    break;
+                case "NOTE":
+                    extraVarsState = 3;
+                    length -= 1;
+                    break;
+                case "ITEM_CRACK":
+                case "BLOCK_CRACK":
+                case "BLOCK_DUST":
+                case "FALLING_DUST":
+                    extraVarsState = 4;
+                    length -= 1;
+                    break;
+            }
+        }
+        switch (length) {
+            case -2:
+                res = new String[]{"0", "255", "0 0", "255 255", "0 0 0", "255 255 255"};
+                break;
+            case -1:
+                res = new String[]{"0", "255", "0 0", "255 255"};
+                break;
+            case 0:
+                res = new String[]{"0", "255"};
+                break;
             case 1:
-                //particle type
-                res = new String[]{"BARRIER", "BLOCK_CRACK", "BLOCK_DUST", "BUBBLE_COLUMN_UP", "BUBBLE_POP", "CAMPFIRE_COZY_SMOKE", "CAMPFIRE_SIGNAL_SMOKE",
-                "CLOUD", "COMPOSTER", "CRIT", "CRIT_MAGIC", "CURRENT_DOWN", "DAMAGE_INDICATOR", "DOLPHIN", "DRAGON_BREATH", "DRIP_LAVA", "DRIP_WATER",
-                "DRIPPING_HONEY", "ENCHANTMENT_TABLE", "END_ROD", "EXPLOSION_HUGE", "EXPLOSION_LARGE", "EXPLOSION_NORMAL", "FALLING_DUST", "FALLING_HONEY",
-                "FALLING_LAVA", "FALLING_NECTAR", "FALLING_WATER", "FIREWORKS_SPARK", "FLAME", "FLASH", "HEART", "ITEM_CRACK", "LANDING_HONEY", "LANDING_LAVA",
-                "LAVA", "LEGACY_BLOCK_CRACK", "LEGACY_BLOCK_DUST", "LEGACY_FALLING_DUST", "MOB_APPEARANCE", "NAUTILUS", "NOTE", "PORTAL", "REDSTONE", "SLIME",
-                "SMOKE_LARGE", "SNEEZE", "SNOW_SHOVEL", "SNOWBALL", "SPELL", "SPELL_INSTANT", "SPELL_MOB", "SPELL_MOB_AMBIENT", "SPELL_WITCH", "SPIT",
-                "SQUID_INK", "SUSPENDED", "SUSPENDED_DEPTH", "SWEEP_ATTACK", "TOTEM", "TOWN_AURA", "VILLAGER_ANGRY", "VILLAGER_HAPPY", "WATER_BUBBLE",
-                "WATER_DROP", "WATER_SPLASH", "WATER_WAKE"};
+                //extra variable / note color / block type
+                switch (extraVarsState) {
+                    case 1:
+                        res = new String[]{"1", "0"};
+                        break;
+                    case 2:
+                        res = new String[]{"2", "1", "0"};
+                        break;
+                    case 3:
+                        res = Util.GetEnumNames(NoteColors.class);
+                        break;
+                    case 4:
+                        res = Util.GetEnumNames(Material.class);
+                        break;
+                }
                 break;
             case 2:
                 //Count
@@ -54,7 +102,7 @@ public class BPComplete implements TabCompleter {
                 res = new String[]{"1"};
                 break;
             default:
-                res = new String[]{"???"};
+                res = new String[]{""};
         }
         return Arrays.asList(res);
     }
