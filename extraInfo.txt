@@ -14,8 +14,7 @@ you plug in aforementioned special details (sometimes...). Anyways, here's a lis
 
 
 "SPELL_MOB","SPELL_MOB_AMBIENT": These guys decided to be different, and decided to use the offset/delta arguments for RGB when
-    the "count" argument is set to 0 and "extra" argument set to 1. sigh. takes RGB values between 0 and 1. If "extra" is set to
-    anything other than 1, the color will be random. If set to 0, they'll be black.
+    the "count" argument is set to 0 and "extra" argument set to 1. sigh. takes RGB values between 0 and 1. Extra contols brightness.
 
     Example:
 
@@ -27,7 +26,7 @@ you plug in aforementioned special details (sometimes...). Anyways, here's a lis
 
 "NOTE": Like the last type, NOTE also abruptly hijacks other arguments with little regard for common decency. Only difference here
     is that NOTE has 24 possible colors. Same deal with the "count" and "extra" arguments as with SPELL. your offset/delta arguments should look like this:
-    "0 0 noteColor" with noteColor being a value between 0 and 1.
+    "noteColor, 0, 0" with noteColor being a value between 0 and 1.
 
     Example:
 

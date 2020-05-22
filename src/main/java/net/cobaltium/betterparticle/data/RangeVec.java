@@ -7,12 +7,13 @@ import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 
-public class ParticleLoc {
+//three ranges collected together to make a randomized vector
+public class RangeVec {
     private ArrayList<Range> loc;
     private World world;
 
     //basically the same as Bukkit.Location, but with support for value ranges instead of just a single position.
-    public ParticleLoc(CommandSender sender, String[] pos) {
+    public RangeVec(CommandSender sender, String[] pos) {
         world = Util.GetSenderWorld(sender);
         loc = new ArrayList<>();
         //add a range for X, Y, and Z

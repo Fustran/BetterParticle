@@ -1,5 +1,5 @@
 package net.cobaltium.betterparticle.commands.bp;
-import net.cobaltium.betterparticle.data.NoteColors;
+import net.cobaltium.betterparticle.data.NoteColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
@@ -25,7 +25,7 @@ public class BPComplete implements TabCompleter {
                     extraVarsState = 1;
                     length -= 4;
                     break;
-                case "SPEL_MOB":
+                case "SPELL_MOB":
                 case "SPELL_MOB_AMBIENT":
                     extraVarsState = 2;
                     length -= 4;
@@ -63,7 +63,7 @@ public class BPComplete implements TabCompleter {
                         res = new String[]{"2", "1", "0"};
                         break;
                     case 3:
-                        res = Util.GetEnumNames(NoteColors.class);
+                        res = Util.GetEnumNames(NoteColor.class);
                         break;
                     case 4:
                         res = Util.GetEnumNames(Material.class);
